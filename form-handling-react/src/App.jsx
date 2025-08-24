@@ -1,5 +1,5 @@
 import RegistrationForm from "./components/RegistrationForm";
-import FormikForm from "./components/FormikForm";
+import FormikForm from "./components/formikForm.js";
 function App() {
   return (
     <div className="min-h-screen flex flex-col gap-8 items-center justify-center bg-gray-100">
