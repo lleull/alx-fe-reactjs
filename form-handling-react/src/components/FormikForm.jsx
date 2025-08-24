@@ -1,130 +1,82 @@
-// src/components/FormikForm.jsx
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const FormikForm = () => {
-  const initialValues = {
-    username: "",
-    email: "",
-    password: "",
-  };
+const validationSchema = Yup.object({
+  username: Yup.string().required("Username is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().min(6, "Min 6 chars").required("Password is required"),
+});
 
-  const validationSchema = Yup.object({
-    username: Yup.string().required("Username is required"),
-    email: Yup.string().email("Invalid email address").required("Email is required"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
-  });
+function FormikForm() {
+  const initialValues = { username: "", email: "", password: "" };
 
-  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
-    try {
-      // Simulate API call
-      const response = await fetch("https://jsonplaceholder.typicode.com/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (response.ok) {
-        alert("Registration successful!");
-      } else {
-        throw new Error("Registration failed");
-      }
-    } catch (error) {
-      setErrors({ submit: error.message });
-    } finally {
-      setSubmitting(false);
-    }
+  const handleSubmit = (values) => {
+    console.log("Formik Submitted:", values);
+    // axios.post("API_URL", values)
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "0 auto", padding: "20px" }}>
-      <h2>Registration Form (Formik)</h2>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting, errors }) => (
-          <Form>
-            <div style={{ marginBottom: "15px" }}>
-              <label htmlFor="username" style={{ display: "block", marginBottom: "5px" }}>
-                Username:
-              </label>
-              <Field
-                type="text"
-                id="username"
-                name="username"
-                style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
-              />
-              <ErrorMessage
-                name="username"
-                component="div"
-                style={{ color: "red", fontSize: "14px" }}
-              />
-            </div>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {() => (
+        <Form className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
+          <h2 className="text-2xl font-bold mb-4">Formik Register</h2>
 
-            <div style={{ marginBottom: "15px" }}>
-              <label htmlFor="email" style={{ display: "block", marginBottom: "5px" }}>
-                Email:
-              </label>
-              <Field
-                type="email"
-                id="email"
-                name="email"
-                style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
-              />
-              <ErrorMessage
-                name="email"
-                component="div"
-                style={{ color: "red", fontSize: "14px" }}
-              />
-            </div>
+          <div className="mb-3">
+            <Field
+              type="text"
+              name="username"
+              placeholder="Username"
+              className="w-full p-2 border rounded"
+            />
+            <ErrorMessage
+              name="username"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
 
-            <div style={{ marginBottom: "15px" }}>
-              <label htmlFor="password" style={{ display: "block", marginBottom: "5px" }}>
-                Password:
-              </label>
-              <Field
-                type="password"
-                id="password"
-                name="password"
-                style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                style={{ color: "red", fontSize: "14px" }}
-              />
-            </div>
+          <div className="mb-3">
+            <Field
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="w-full p-2 border rounded"
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              style={{
-                width: "100%",
-                padding: "10px",
-                backgroundColor: isSubmitting ? "#ccc" : "#007bff",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: isSubmitting ? "not-allowed" : "pointer",
-              }}
-            >
-              {isSubmitting ? "Submitting..." : "Register"}
-            </button>
+          <div className="mb-3">
+            <Field
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="w-full p-2 border rounded"
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
 
-            {errors.submit && (
-              <div style={{ color: "red", marginTop: "10px" }}>{errors.submit}</div>
-            )}
-          </Form>
-        )}
-      </Formik>
-    </div>
+          <button
+            type="submit"
+            className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
+          >
+            Submit
+          </button>
+        </Form>
+      )}
+    </Formik>
   );
-};
+}
 
 export default FormikForm;
