@@ -12,20 +12,18 @@ function RegistrationForm() {
     username: "",
     email: "",
     password: "",
-    general: ""
   });
 
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    
-    // Clear individual error when user starts typing
-    if (errors[name] || errors.general) {
+
+    // Clear error when user starts typing
+    if (errors[name]) {
       setErrors({
         ...errors,
         [name]: "",
-        general: ""
       });
     }
   };
@@ -39,13 +37,12 @@ function RegistrationForm() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Reset errors
     setErrors({
       username: "",
       email: "",
       password: "",
-      general: ""
     });
 
     let hasError = false;
@@ -53,7 +50,6 @@ function RegistrationForm() {
       username: "",
       email: "",
       password: "",
-      general: ""
     };
 
     // Individual field validation
@@ -94,78 +90,88 @@ function RegistrationForm() {
     }, 500);
   };
 
-  const username = formData.username;
-  const email = formData.email;
-  const password = formData.password;
-
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h2 style={{ textAlign: 'center', color: '#333' }}>Registration Form</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        {errors.general && <p style={{ color: "red", textAlign: 'center' }}>{errors.general}</p>}
-
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label style={{ marginBottom: '5px', fontWeight: 'bold' }}>Username: </label>
-          <input 
-            type="text" 
-            name="username" 
-            value={username} 
+    <div
+      style={{
+        maxWidth: "400px",
+        margin: "50px auto",
+        padding: "20px",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <h2 style={{ textAlign: "center", color: "#333" }}>Registration Form (Controlled)</h2>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+      >
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label style={{ marginBottom: "5px", fontWeight: "bold" }}>Username: </label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
-            style={{ 
-              padding: '10px', 
-              border: errors.username ? '2px solid red' : '1px solid #ccc',
-              borderRadius: '4px'
-            }} 
+            style={{
+              padding: "10px",
+              border: errors.username ? "2px solid red" : "1px solid #ccc",
+              borderRadius: "4px",
+            }}
           />
-          {errors.username && <p style={{ color: "red", margin: '5px 0 0', fontSize: '14px' }}>{errors.username}</p>}
+          {errors.username && (
+            <p style={{ color: "red", margin: "5px 0 0", fontSize: "14px" }}>{errors.username}</p>
+          )}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label style={{ marginBottom: '5px', fontWeight: 'bold' }}>Email: </label>
-          <input 
-            type="email" 
-            name="email" 
-            value={email} 
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label style={{ marginBottom: "5px", fontWeight: "bold" }}>Email: </label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
-            style={{ 
-              padding: '10px', 
-              border: errors.email ? '2px solid red' : '1px solid #ccc',
-              borderRadius: '4px'
-            }} 
+            style={{
+              padding: "10px",
+              border: errors.email ? "2px solid red" : "1px solid #ccc",
+              borderRadius: "4px",
+            }}
           />
-          {errors.email && <p style={{ color: "red", margin: '5px 0 0', fontSize: '14px' }}>{errors.email}</p>}
+          {errors.email && (
+            <p style={{ color: "red", margin: "5px 0 0", fontSize: "14px" }}>{errors.email}</p>
+          )}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <label style={{ marginBottom: '5px', fontWeight: 'bold' }}>Password: </label>
-          <input 
-            type="password" 
-            name="password" 
-            value={password} 
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label style={{ marginBottom: "5px", fontWeight: "bold" }}>Password: </label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
             onChange={handleChange}
-            style={{ 
-              padding: '10px', 
-              border: errors.password ? '2px solid red' : '1px solid #ccc',
-              borderRadius: '4px'
-            }} 
+            style={{
+              padding: "10px",
+              border: errors.password ? "2px solid red" : "1px solid #ccc",
+              borderRadius: "4px",
+            }}
           />
-          {errors.password && <p style={{ color: "red", margin: '5px 0 0', fontSize: '14px' }}>{errors.password}</p>}
+          {errors.password && (
+            <p style={{ color: "red", margin: "5px 0 0", fontSize: "14px" }}>{errors.password}</p>
+          )}
         </div>
 
-        <button 
+        <button
           type="submit"
           style={{
-            padding: '12px',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: 'bold'
+            padding: "12px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontSize: "16px",
+            fontWeight: "bold",
           }}
-          onMouseOver={(e) => e.target.style.backgroundColor = '#45a049'}
-          onMouseOut={(e) => e.target.style.backgroundColor = '#4CAF50'}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#45a049")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#4CAF50")}
         >
           Register
         </button>
