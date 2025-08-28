@@ -5,7 +5,7 @@ function RegistrationForm() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const [error, setError] = useState("");
@@ -33,7 +33,9 @@ function RegistrationForm() {
       alert(`User ${formData.username} registered successfully!`);
     }, 500);
   };
-
+  const username = formData.username;
+  const email = formData.email;
+  const password = formData.password;
   return (
     <div>
       <h2>Registration Form (Controlled)</h2>
@@ -42,32 +44,17 @@ function RegistrationForm() {
 
         <div>
           <label>Username: </label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-          />
+          <input type="text" name="username" value={username} onChange={handleChange} />
         </div>
 
         <div>
           <label>Email: </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+          <input type="email" name="email" value={email} onChange={handleChange} />
         </div>
 
         <div>
           <label>Password: </label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+          <input type="password" name="password" value={password} onChange={handleChange} />
         </div>
 
         <button type="submit">Register</button>
